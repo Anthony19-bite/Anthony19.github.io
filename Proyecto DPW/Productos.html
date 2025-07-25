@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Sistema de Gestión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .brand-text {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: #00ff88;
+            color: #0a0a0a;
+        }
+        .btn-danger {
+            background: #ff3366;
+            color: white;
+        }
+        .products-section {
+            background: #111111;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .product-card {
+            background: #1a1a1a;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .product-name {
+            font-weight: 600;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: #222;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #444;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+            
+            .brand-text {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+            
+            .header > div:last-child {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                margin-left: 0;
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .products-section {
+                padding: 0.75rem;
+            }
+            
+            .product-card {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+                width: calc(100% - 2rem);
+            }
+            
+            .form-input {
+                padding: 0.75rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.5rem;
+            }
+            
+            .brand-text {
+                font-size: 1.25rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .products-section {
+                padding: 0.5rem;
+            }
+            
+            .products-section h2 {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .product-card {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+                margin: 0.5rem;
+                width: calc(100% - 1rem);
+            }
+            
+            .modal-content h2 {
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+            
+            .form-input {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .brand-text {
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .product-card {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
+            
+            .form-input {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Landscape orientation for small screens */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .modal-content {
+                max-height: 85vh;
+                padding: 1rem;
+            }
+            
+            .header {
+                margin-bottom: 1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* Touch optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .product-card {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+            
+            .form-input {
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="brand-text">TechStore</div>
+            <div>
+                <button class="btn btn-primary" onclick="openModal()">Agregar Producto</button>
+                <button class="btn btn-danger" onclick="deleteProduct()" id="deleteBtn" disabled>Eliminar Producto</button>
+            </div>
+        </header>
+
+        <section class="products-section">
+            <h2>Productos</h2>
+            <div id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Agregar Producto</h2>
+            <form id="productForm">
+                <input type="text" class="form-input" id="productName" placeholder="Nombre del Producto" required>
+                <input type="text" class="form-input" id="productBrand" placeholder="Marca" required>
+                <input type="text" class="form-input" id="productCategory" placeholder="Categoría" required>
+                <input type="number" class="form-input" id="productPrice" placeholder="Precio" required>
+                <input type="number" class="form-input" id="productStock" placeholder="Stock" required>
+                <button type="button" class="btn btn-danger" onclick="closeModal()">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let products = [];
+        let selectedProductId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+        });
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="selectProduct(${product.id})">
+                    <div class="product-name">${product.name}</div>
+                    <div>${product.brand}</div>
+                    <div>$${product.price.toFixed(2)}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectProduct(id) {
+            selectedProductId = id;
+            document.getElementById('deleteBtn').disabled = false;
+        }
+
+        function openModal() {
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newProduct = {
+                id: Date.now(),
+                name: document.getElementById('productName').value,
+                brand: document.getElementById('productBrand').value,
+                category: document.getElementById('productCategory').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value)
+            };
+            products.push(newProduct);
+            renderProducts();
+            closeModal();
+        });
+
+        function deleteProduct() {
+            if (selectedProductId) {
+                products = products.filter(product => product.id !== selectedProductId);
+                selectedProductId = null;
+                document.getElementById('deleteBtn').disabled = true;
+                renderProducts();
+            }
+        }
+    </script>
+</body>
+</html>
